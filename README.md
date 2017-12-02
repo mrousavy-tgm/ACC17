@@ -6,9 +6,10 @@ For every level there is a subdirectory (e.g.: `ACC17/01_GameOfLife` and `ACC17_
 
 # Add a new Project
 ```sh
-dotnet sln ACC17.sln add ACC_17/LEVEL_NAME/LEVEL_NAME.csproj    # Actual Project
-dotnet sln ACC17.sln add ACC_17_Tests/LEVEL_NAME_Tests/LEVEL_NAME_Tests.csproj    # Test Project ([see](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test))
+dotnet sln ACC17.sln add ACC_17/[LEVEL_NAME]/[LEVEL_NAME].csproj    # Actual Project
+dotnet sln ACC17.sln add ACC_17_Tests/[LEVEL_NAME]Tests/[LEVEL_NAME]Tests.csproj    # Test Project
 ```
+(For more info on XUnit test projects see [here](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test))
 
 # Building:
 ### Prerequisites:
@@ -22,21 +23,21 @@ dotnet restore
 
 * Build Projects
 ```sh
-dotnet build ACC17/ACC17.csproj -c CATEGORY_LEVEL
-dotnet build ACC17_Tests/ACC17_Tests.csproj -c CATEGORY_LEVEL
+dotnet build ACC_17/[LEVEL_NAME]/[LEVEL_NAME].csproj -c Release
+dotnet build ACC_17_Tests/[LEVEL_NAME]/[LEVEL_NAME]_Tests.csproj -c Release
 ```
 
 ### Run tests
 ```sh
-dotnet test ACC17_Tests/ACC17_Tests.csproj -c CATEGORY_LEVEL
+dotnet test ACC_17_Tests/[LEVEL_NAME]Tests/[LEVEL_NAME]Tests.csproj -c CATEGORY_LEVEL
 ```
 
 ### Run Main
 ```sh
-dotnet run ACC17/ACC17.csproj -c Release -- "3;3;0;000111000$" "output.csv" "0" "50"
+dotnet run ACC_17/[LEVEL_NAME]/[LEVEL_NAME].csproj -c Release -- "3;3;0;000111000$" "output.csv" "0" "50"
 ```
 
 (Or just run `build.sh`)
 
-#### Where `CATEGORY_LEVEL` is combined of the Category (Junior, Intermediate, Expert) and the level (01, 02, ..).
-E.g: `Expert_01`
+#### Where `LEVEL_NAME` is combined of the Level (01, 02, ..) and the Name (GameOfLife, ..)
+E.g: `01_GameOfLife`
