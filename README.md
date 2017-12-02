@@ -24,7 +24,7 @@ dotnet restore
 * Build Projects
 ```sh
 dotnet build ACC_17/[LEVEL_NAME]/[LEVEL_NAME].csproj -c Release
-dotnet build ACC_17_Tests/[LEVEL_NAME]/[LEVEL_NAME]_Tests.csproj -c Release
+dotnet build ACC_17_Tests/[LEVEL_NAME]Tests/[LEVEL_NAME]Tests.csproj -c Release
 ```
 
 ### Run tests
