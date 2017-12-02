@@ -5,31 +5,19 @@ using System.Text;
 
 namespace ACC17._01_GameOfLife {
     /// <summary>
-    /// Implementation for the Advent Coding Contest 2017 in C#
+    ///     Implementation for the Advent Coding Contest 2017 in C#
     /// </summary>
     /// <author>
-    /// Marc Rousavy (marcrousavy@hotmail.com)
+    ///     Marc Rousavy (marcrousavy@hotmail.com)
     /// </author>
     public class GameOfLife {
-
-        private int Width { get; set; }
-
-        private int Height { get; set; }
-
-        private int Generation { get; set; }
-
-        private string Pattern { get; set; }
-
-        private HashSet<string> RuleSet { get; set; }
-
-
         /// <summary>
-        /// The constructor of GameOfLife initializes the pattern and all the private attributes
+        ///     The constructor of GameOfLife initializes the pattern and all the private attributes
         /// </summary>
         /// <param name="initPattern">
-        /// should obey this definition for a pattern <code>"3;3;0;110001110$"</code>, where the information is
-        /// defined as <code>"width;height;generation;[row][row][row]$"</code> and the dollar($) at the end marks
-        /// the End-Of-Line.
+        ///     should obey this definition for a pattern <code>"3;3;0;110001110$"</code>, where the information is
+        ///     defined as <code>"width;height;generation;[row][row][row]$"</code> and the dollar($) at the end marks
+        ///     the End-Of-Line.
         /// </param>
         public GameOfLife(string initPattern) {
             string[] info = initPattern.Split(";");
@@ -37,24 +25,31 @@ namespace ACC17._01_GameOfLife {
             Height = int.Parse(info[1]);
             Generation = int.Parse(info[2]);
             Pattern = info[3].Substring(0, info[3].Length - 1);
+            RuleSet = new HashSet<string>();
         }
 
+        private int Width { get; }
+
+        private int Height { get; }
+
+        private int Generation { get; set; }
+
+        private string Pattern { get; }
+
+        private HashSet<string> RuleSet { get; }
+
         /// <summary>
-        /// Returns a pattern as a String for the given generation number.
+        ///     Returns a pattern as a String for the given generation number.
         /// </summary>
         /// <param name="generation">
-        /// The generation for which the pattern should be returned.
+        ///     The generation for which the pattern should be returned.
         /// </param>
         /// <returns>
-        /// should obey this definition for a pattern "3;3;0;110001110$", where the information is defined as
-        /// <code>"width;height;generation;[row][row][row]$"</code> and the dollar ($) at the end marks the End-Of-Line.
+        ///     should obey this definition for a pattern "3;3;0;110001110$", where the information is defined as
+        ///     <code>"width;height;generation;[row][row][row]$"</code> and the dollar ($) at the end marks the End-Of-Line.
         /// </returns>
         public string GetPattern(int generation) {
-
-
-
             // TODO: Here you should evaluate the pattern
-
 
 
             var ret = new StringBuilder();
@@ -66,116 +61,119 @@ namespace ACC17._01_GameOfLife {
         }
 
         /// <summary>
-        /// Returns the pattern of the next generation.
+        ///     Returns the pattern of the next generation.
         /// </summary>
         /// <returns>
-        /// should obey this definition for a pattern "3;3;0;110001110$", where
-        /// the information is defined as <code>"width;height;generation;[row][row][row]$"</code>
-        /// and the dollar ($) at the end marks the End-Of-Line.
+        ///     should obey this definition for a pattern "3;3;0;110001110$", where
+        ///     the information is defined as <code>"width;height;generation;[row][row][row]$"</code>
+        ///     and the dollar ($) at the end marks the End-Of-Line.
         /// </returns>
-        public string GetNextPattern() => GetPattern(++Generation);
+        public string GetNextPattern() {
+            return GetPattern(++Generation);
+        }
 
         /// <summary>
-        /// Returns the pattern of the previous generation.
+        ///     Returns the pattern of the previous generation.
         /// </summary>
         /// <returns>
-        /// should obey this definition for a pattern "3;3;0;110001110$", where
-        /// the information is defined as <code>"width;height;generation;[row][row][row]$"</code>
-        /// and the dollar ($) at the end marks the End-Of-Line.
+        ///     should obey this definition for a pattern "3;3;0;110001110$", where
+        ///     the information is defined as <code>"width;height;generation;[row][row][row]$"</code>
+        ///     and the dollar ($) at the end marks the End-Of-Line.
         /// </returns>
-        public string GetPreviousPattern() => GetPattern(--Generation);
+        public string GetPreviousPattern() {
+            return GetPattern(--Generation);
+        }
 
         /// <summary>
-        /// Adding one rule to the Game-Of-Life Engine rule-set.
+        ///     Adding one rule to the Game-Of-Life Engine rule-set.
         /// </summary>
         /// <param name="descriptionId">
-        /// A String which defines a Game-Of-Life rule.
+        ///     A String which defines a Game-Of-Life rule.
         /// </param>
         public void AddRule(string descriptionId) {
             RuleSet.Add(descriptionId);
         }
 
         /// <summary>
-        /// Adding rules to the Game-Of-Life Engine rule-set.
+        ///     Adding rules to the Game-Of-Life Engine rule-set.
         /// </summary>
         /// <param name="descriptionIdList">
-        /// A List of Strings with Game-Of-Life rules.
+        ///     A List of Strings with Game-Of-Life rules.
         /// </param>
         public void AddRules(List<string> descriptionIdList) {
             descriptionIdList.ForEach(AddRule);
         }
-        
+
         /// <summary>
-        /// Removing one rule from the Game-Of-Life Engine rule-set.
+        ///     Removing one rule from the Game-Of-Life Engine rule-set.
         /// </summary>
         /// <param name="descriptionId">
-        /// A String which defines a Game-Of-Life rule.
+        ///     A String which defines a Game-Of-Life rule.
         /// </param>
         public void RemoveRule(string descriptionId) {
             RuleSet.Remove(descriptionId);
         }
-        
+
         /// <summary>
-        /// Removing rules from the Game-Of-Life Engine rule-set.
+        ///     Removing rules from the Game-Of-Life Engine rule-set.
         /// </summary>
         /// <param name="descriptionIdList">
-        /// A List of Strings with Game-Of-Life rules.
+        ///     A List of Strings with Game-Of-Life rules.
         /// </param>
         public void RemoveRules(List<string> descriptionIdList) {
             descriptionIdList.ForEach(RemoveRule);
         }
 
         /// <summary>
-        /// Exporting the patterns to a file. Example: 
-        /// 
+        ///     Exporting the patterns to a file. Example:
         ///     * <code>2;2;0;1011$ 2;2;1;0000$</code>
         ///     * <code>2;2;2;0000$ 2;2;3;0000$ 2;2;4;0000$</code>
         /// </summary>
         /// <param name="start">
-        /// First generation number.
+        ///     First generation number.
         /// </param>
         /// <param name="end">
-        /// Last generation number.
+        ///     Last generation number.
         /// </param>
         /// <param name="filename">
-        /// Name of File.
+        ///     Name of File.
         /// </param>
         public void ExportGenerations(int start, int end, string filename) {
             var output = new StringBuilder();
 
-            if(start <= end)
-                for(int i = start; i <= end; i++)
+            if (start <= end)
+                for (int i = start; i <= end; i++)
                     output.Append(GetPattern(i));
             else
-                for(int i = end; i >= start; i--)
+                for (int i = end; i >= start; i--)
                     output.Append(GetPattern(i));
 
             try {
                 File.WriteAllText(filename, output.ToString());
-            } catch(Exception e) {
+            } catch (Exception e) {
                 Console.WriteLine(e);
             }
         }
 
         /// <summary>
-        /// Check your functionality with this main method.
+        ///     Check your functionality with this main method.
         /// </summary>
         /// <param name="args">
-        /// Define as first parameter the pattern (e.g. "4;4;0;1011101010101001$"),
-        /// second the filename, third the start generation and as last parameter
-        /// the end generation. E.g. java gol.GameOfLife 4;4;0;1011101010101001$ out.csv 0 100
+        ///     Define as first parameter the pattern (e.g. "4;4;0;1011101010101001$"),
+        ///     second the filename, third the start generation and as last parameter
+        ///     the end generation. E.g. java gol.GameOfLife 4;4;0;1011101010101001$ out.csv 0 100
         /// </param>
         public static void Main(string[] args) {
             GameOfLife gol;
 
-            if(args.Length != 4) {
+            if (args.Length != 4) {
                 gol = new GameOfLife("4;4;0;1011101010101001$");
                 gol.ExportGenerations(0, 5, "output.csv");
-            } else if(args.Length == 4) {
+            } else if (args.Length == 4) {
                 try {
                     gol = new GameOfLife(args[0]);
                     gol.ExportGenerations(int.Parse(args[2]), int.Parse(args[3]), args[1]);
-                } catch(FormatException e) {
+                } catch (FormatException e) {
                     Console.WriteLine(e);
                 }
             }
