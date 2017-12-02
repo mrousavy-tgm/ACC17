@@ -10,18 +10,18 @@ For every level there is a subdirectory (e.g.: `ACC17/01_GameOfLife` and `ACC17_
 
 ### Build
 * Restore NuGet Packages
-```
+```sh
 dotnet restore
 ```
 
 * Build Projects
-```
+```sh
 dotnet build ACC17/ACC17.csproj -c CATEGORY_LEVEL
 dotnet build ACC17_Tests/ACC17_Tests.csproj -c CATEGORY_LEVEL
 ```
 
 ### Run tests
-```
+```sh
 dotnet test ACC17_Tests/ACC17_Tests.csproj -c CATEGORY_LEVEL
 ```
 
