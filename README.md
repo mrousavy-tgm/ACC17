@@ -10,7 +10,7 @@ For every level there is a subdirectory (e.g.: `ACC17/01_GameOfLife` and `ACC17_
 
 * Build
 ```
-dotnet build ACC17/ACC17.csproj -c CATEGORY_LEVEL					# Build Source Project
+dotnet build ACC17/ACC17.csproj -c CATEGORY_LEVEL		        # Build Source Project
 dotnet build ACC17_Tests/ACC17_Tests.csproj -c CATEGORY_LEVEL		# Build Test Project
 ```
 
