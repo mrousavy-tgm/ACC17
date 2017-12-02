@@ -2,7 +2,7 @@
 Advent coding contest (TGM) 2017 - C#
 
 # Levels
-For every level there is a subdirectory (e.g.: `ACC17/01_GameOfLife` and `ACC17_Tests/01_GameOfLife`) for all source files, **and** a build-configuration for Category + Level. (e.g. `Expert_01`)
+For every level there is a subdirectory (e.g.: `ACC17/01_GameOfLife`) for all source files, **and** a subdirectory for unit tests (`ACC17_Tests/01_GameOfLifeTests`)
 
 # Add a new Project
 ```sh
