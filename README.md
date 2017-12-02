@@ -5,16 +5,16 @@ Advent coding contest (TGM) 2017 - C#
 For every level there is a subdirectory (e.g.: `ACC17/01_GameOfLife` and `ACC17_Tests/01_GameOfLife`) for all source files, **and** a build-configuration for Category + Level. (e.g. `Expert_01`)
 
 # Building:
-* Prerequisites:
+### Prerequisites:
 1. [.NET Core SDK](https://www.microsoft.com/net/download)
 
-* Build
+### Build
 ```
 dotnet build ACC17/ACC17.csproj -c CATEGORY_LEVEL		        # Build Source Project
 dotnet build ACC17_Tests/ACC17_Tests.csproj -c CATEGORY_LEVEL		# Build Test Project
 ```
 
-* Run tests
+### Run tests
 ```
 dotnet test ACC17_Tests/ACC17_Tests.csproj -c CATEGORY_LEVEL		# Run unit tests
 ```
