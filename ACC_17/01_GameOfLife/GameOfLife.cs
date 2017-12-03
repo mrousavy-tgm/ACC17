@@ -229,16 +229,16 @@ namespace ACC17._01_GameOfLife {
         public void ExportGenerations(int start, int end, string filename) {
             var output = new StringBuilder();
 
-            if (start <= end)
-                for (int i = start; i <= end; i++)
+            if(start <= end)
+                for(int i = start; i <= end; i++)
                     output.Append(GetPattern(i));
             else
-                for (int i = end; i >= start; i--)
+                for(int i = end; i >= start; i--)
                     output.Append(GetPattern(i));
 
             try {
                 File.WriteAllText(filename, output.ToString());
-            } catch (Exception e) {
+            } catch(Exception e) {
                 Console.WriteLine(e);
             }
         }
@@ -254,14 +254,14 @@ namespace ACC17._01_GameOfLife {
         public static void Main(string[] args) {
             GameOfLife gol;
 
-            if (args.Length != 4) {
+            if(args.Length != 4) {
                 gol = new GameOfLife("4;4;0;1011101010101001$");
                 gol.ExportGenerations(0, 5, "output.csv");
-            } else if (args.Length == 4) {
+            } else if(args.Length == 4) {
                 try {
                     gol = new GameOfLife(args[0]);
                     gol.ExportGenerations(int.Parse(args[2]), int.Parse(args[3]), args[1]);
-                } catch (FormatException e) {
+                } catch(FormatException e) {
                     Console.WriteLine(e);
                 }
             }
