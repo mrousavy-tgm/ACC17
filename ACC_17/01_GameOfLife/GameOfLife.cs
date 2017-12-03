@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace ACC17._01_GameOfLife {
@@ -103,6 +104,28 @@ namespace ACC17._01_GameOfLife {
                 }
             }
             return count;
+        }
+
+
+        private char[,] ToCharArray() {
+            char[,] result = new char[Width, Height];
+
+            for(int w = 0; w < Width; w++) {
+                for(int h = 0; h < Height; h++) {
+                    result[w, h] = Matrix[w, h].ToChar();
+                }
+            }
+            return result;
+        }
+
+        public static T[,] Split<T>(T[] data, int height, int width) {
+            T[,] output = new T[height, width];
+            for(int i = 0; i < height; i++) {
+                for(int j = 0; j < width; j++) {
+                    output[i, j] = data[i * width + j];
+                }
+            }
+            return output;
         }
 
         /// <summary>
