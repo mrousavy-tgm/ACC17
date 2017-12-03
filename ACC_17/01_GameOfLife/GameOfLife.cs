@@ -90,6 +90,21 @@ namespace ACC17._01_GameOfLife {
             return ret.ToString();
         }
 
+
+        private static int SurroundedBy(Cell[,] array, int x, int y) {
+            int count = 0;
+
+            for(int xs = x - 1; xs < x + 1; xs++) {
+                for(int ys = y - 1; ys < y + 1; ys++) {
+                    if(xs <= 0 || xs >= array.Length || ys <= 0 || ys >= array.Length)
+                        continue;
+                    if(array[xs, ys].Alive)
+                        count++;
+                }
+            }
+            return count;
+        }
+
         /// <summary>
         ///     Returns the pattern of the next generation.
         /// </summary>
