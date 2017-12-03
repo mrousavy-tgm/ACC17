@@ -12,6 +12,20 @@ namespace ACC17._01_GameOfLife {
     /// </author>
     public class GameOfLife {
         /// <summary>
+        ///     A basic Game Of Life Cell
+        /// </summary>
+        private struct Cell {
+            /// <summary>
+            ///     A Value indicating whether this Cell is alive or not
+            /// </summary>
+            public bool Alive { get; set; }
+
+            public override string ToString() => ToChar().ToString();
+            public char ToChar() => Alive ? '1' : '0';
+        }
+
+
+        /// <summary>
         ///     The constructor of GameOfLife initializes the pattern and all the private attributes
         /// </summary>
         /// <param name="initPattern">
