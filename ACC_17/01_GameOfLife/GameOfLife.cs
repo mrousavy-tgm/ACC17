@@ -68,8 +68,19 @@ namespace ACC17._01_GameOfLife {
         ///     <code>"width;height;generation;[row][row][row]$"</code> and the dollar ($) at the end marks the End-Of-Line.
         /// </returns>
         public string GetPattern(int generation) {
-            // TODO: Here you should evaluate the pattern
-
+            for(int g = Generation; g < generation; g++) {
+                for(int w = 0; w < Width; w++) {
+                    for(int h = 0; h < Height; h++) {
+                        int count = SurroundedBy(Matrix, w, h);
+                        if(count < 3)
+                            Matrix[w, h].Alive = false; // Starvation
+                        else if(count == 3)
+                            Matrix[w, h].Alive = true;  // Kept alive
+                        else if(count > 3)
+                            Matrix[w, h].Alive = false; // Overpopulation
+                    }
+                }
+            }
 
             var ret = new StringBuilder();
             ret.Append(Width + ";");
