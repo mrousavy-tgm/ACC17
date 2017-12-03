@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ACC17._01_GameOfLife {
     /// <summary>
-    ///     Implementation for the Advent Coding Contest 2017 in C#
+    ///     Implementation for the TGM HIT Advent Coding Contest 2017 in C#
     /// </summary>
     /// <author>
     ///     Marc Rousavy (marcrousavy@hotmail.com)
@@ -161,7 +161,7 @@ namespace ACC17._01_GameOfLife {
         /// <param name="args">
         ///     Define as first parameter the pattern (e.g. "4;4;0;1011101010101001$"),
         ///     second the filename, third the start generation and as last parameter
-        ///     the end generation. E.g. java gol.GameOfLife 4;4;0;1011101010101001$ out.csv 0 100
+        ///     the end generation. E.g. dotnet run 01_GameOfLife 4;4;0;1011101010101001$ out.csv 0 100
         /// </param>
         public static void Main(string[] args) {
             GameOfLife gol;
