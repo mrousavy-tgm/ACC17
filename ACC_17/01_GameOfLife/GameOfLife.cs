@@ -128,6 +128,26 @@ namespace ACC17._01_GameOfLife {
             return output;
         }
 
+        private Cell[,] ToMatrix(string pattern) {
+            char[,] chars = Split(pattern.ToCharArray(), Height, Width);
+            Cell[,] matrix = new Cell[Width, Height];
+
+            for(int h = 0; h < Height; h++) {
+                for(int w = 0; w < Width; w++) {
+                    char c = chars[w, h];
+                    matrix[w, h] = new Cell { Alive = c == '1' };
+                }
+            }
+            return matrix;
+        }
+
+        private string ToPattern() {
+            char[,] chars = ToCharArray();
+            char[] pattern = new char[Width * Height];
+            Buffer.BlockCopy(chars, 0, pattern, 0, (Width * Height) * sizeof(char));
+            return new string(pattern);
+        }
+
         /// <summary>
         ///     Returns the pattern of the next generation.
         /// </summary>
