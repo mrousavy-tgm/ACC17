@@ -48,9 +48,14 @@ namespace ACC17._01_GameOfLife {
 
         private int Generation { get; set; }
 
-        private string Pattern { get; }
-
         private HashSet<string> RuleSet { get; }
+
+        private Cell[,] Matrix { get; set; }
+
+        private string Pattern {
+            get => ToPattern();
+            set => Matrix = ToMatrix(value);
+        }
 
         /// <summary>
         ///     Returns a pattern as a String for the given generation number.
