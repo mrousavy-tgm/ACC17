@@ -70,8 +70,8 @@ namespace ACC17._01_GameOfLife {
         /// </returns>
         public string GetPattern(int generation) {
             for(int g = Generation; g < generation; g++) {
-                for(int w = 0; w < Width; w++) {
-                    for(int h = 0; h < Height; h++) {
+                for(int h = 0; h < Height; h++) {
+                    for(int w = 0; w < Width; w++) {
                         int count = SurroundedBy(Matrix, w, h);
                         if(count < 3)
                             Matrix[w, h].Alive = false; // Starvation
@@ -94,10 +94,13 @@ namespace ACC17._01_GameOfLife {
 
         private static int SurroundedBy(Cell[,] array, int x, int y) {
             int count = 0;
+            int mWidth = array.GetLength(0);
+            int mHeight = array.GetLength(1);
 
-            for(int xs = x - 1; xs < x + 1; xs++) {
-                for(int ys = y - 1; ys < y + 1; ys++) {
-                    if(xs <= 0 || xs >= array.Length || ys <= 0 || ys >= array.Length)
+            for(int xs = x - 1; xs <= x + 1; xs++) {
+                for(int ys = y - 1; ys <= y + 1; ys++) {
+                    if(xs < 0 || xs >= mWidth ||
+                        ys < 0 || ys >= mHeight)
                         continue;
                     if(array[xs, ys].Alive)
                         count++;
