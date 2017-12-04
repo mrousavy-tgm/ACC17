@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -11,6 +11,20 @@ namespace ACC17._01_GameOfLife {
     ///     Marc Rousavy (marcrousavy@hotmail.com)
     /// </author>
     public class GameOfLife {
+        /// <summary>
+        ///     A basic Game Of Life Cell
+        /// </summary>
+        private struct Cell {
+            /// <summary>
+            ///     A Value indicating whether this Cell is alive or not
+            /// </summary>
+            public bool Alive { get; set; }
+
+            public override string ToString() => ToChar().ToString();
+            public char ToChar() => Alive ? '1' : '0';
+        }
+
+
         /// <summary>
         ///     The constructor of GameOfLife initializes the pattern and all the private attributes
         /// </summary>
@@ -34,9 +48,14 @@ namespace ACC17._01_GameOfLife {
 
         private int Generation { get; set; }
 
-        private string Pattern { get; }
-
         private HashSet<string> RuleSet { get; }
+
+        private Cell[,] Matrix { get; set; }
+
+        private string Pattern {
+            get => ToPattern();
+            set => Matrix = ToMatrix(value);
+        }
 
         /// <summary>
         ///     Returns a pattern as a String for the given generation number.
@@ -49,8 +68,23 @@ namespace ACC17._01_GameOfLife {
         ///     <code>"width;height;generation;[row][row][row]$"</code> and the dollar ($) at the end marks the End-Of-Line.
         /// </returns>
         public string GetPattern(int generation) {
-            // TODO: Here you should evaluate the pattern
+            Cell[,] copy = new Cell[Width, Height];
+            Array.Copy(Matrix, copy, Matrix.Length);    // Create a writeable copy of matrix
 
+            for (int g = Generation; g < generation; g++) {
+                for (int h = 0; h < Height; h++) {
+                    for (int w = 0; w < Width; w++) {
+                        int count = SurroundedBy(Matrix, w, h);
+                        if (count < 2)
+                            copy[w, h].Alive = false; // Starvation
+                        else if (count == 2 || count == 3)
+                            copy[w, h].Alive = true; // Kept alive
+                        else if (count > 3)
+                            copy[w, h].Alive = false; // Overpopulation
+                    }
+                }
+            }
+            Matrix = copy;  // Write modified copy to matrix
 
             var ret = new StringBuilder();
             ret.Append(Width + ";");
@@ -58,6 +92,67 @@ namespace ACC17._01_GameOfLife {
             ret.Append(Generation + ";");
             ret.Append(Pattern + "$\n");
             return ret.ToString();
+        }
+
+
+        private static int SurroundedBy(Cell[,] array, int x, int y) {
+            int count = 0;
+            int mWidth = array.GetLength(0);
+            int mHeight = array.GetLength(1);
+
+            for(int xs = x - 1; xs <= x + 1; xs++) {
+                for(int ys = y - 1; ys <= y + 1; ys++) {
+                    if(xs < 0 || xs >= mWidth ||
+                        ys < 0 || ys >= mHeight ||
+                        (xs == x && ys == y))
+                        continue;
+                    if(array[xs, ys].Alive)
+                        count++;
+                }
+            }
+            return count;
+        }
+
+
+        private char[,] ToCharArray() {
+            char[,] result = new char[Width, Height];
+
+            for(int w = 0; w < Width; w++) {
+                for(int h = 0; h < Height; h++) {
+                    result[w, h] = Matrix[w, h].ToChar();
+                }
+            }
+            return result;
+        }
+
+        public static T[,] Split<T>(T[] data, int height, int width) {
+            T[,] output = new T[height, width];
+            for(int i = 0; i < height; i++) {
+                for(int j = 0; j < width; j++) {
+                    output[i, j] = data[i * width + j];
+                }
+            }
+            return output;
+        }
+
+        private Cell[,] ToMatrix(string pattern) {
+            char[,] chars = Split(pattern.ToCharArray(), Height, Width);
+            Cell[,] matrix = new Cell[Width, Height];
+
+            for(int h = 0; h < Height; h++) {
+                for(int w = 0; w < Width; w++) {
+                    char c = chars[w, h];
+                    matrix[w, h] = new Cell { Alive = c == '1' };
+                }
+            }
+            return matrix;
+        }
+
+        private string ToPattern() {
+            char[,] chars = ToCharArray();
+            char[] pattern = new char[Width * Height];
+            Buffer.BlockCopy(chars, 0, pattern, 0, (Width * Height) * sizeof(char));
+            return new string(pattern);
         }
 
         /// <summary>
@@ -141,16 +236,16 @@ namespace ACC17._01_GameOfLife {
         public void ExportGenerations(int start, int end, string filename) {
             var output = new StringBuilder();
 
-            if (start <= end)
-                for (int i = start; i <= end; i++)
+            if(start <= end)
+                for(int i = start; i <= end; i++)
                     output.Append(GetPattern(i));
             else
-                for (int i = end; i >= start; i--)
+                for(int i = end; i >= start; i--)
                     output.Append(GetPattern(i));
 
             try {
                 File.WriteAllText(filename, output.ToString());
-            } catch (Exception e) {
+            } catch(Exception e) {
                 Console.WriteLine(e);
             }
         }
@@ -166,14 +261,14 @@ namespace ACC17._01_GameOfLife {
         public static void Main(string[] args) {
             GameOfLife gol;
 
-            if (args.Length != 4) {
+            if(args.Length != 4) {
                 gol = new GameOfLife("4;4;0;1011101010101001$");
                 gol.ExportGenerations(0, 5, "output.csv");
-            } else if (args.Length == 4) {
+            } else if(args.Length == 4) {
                 try {
                     gol = new GameOfLife(args[0]);
                     gol.ExportGenerations(int.Parse(args[2]), int.Parse(args[3]), args[1]);
-                } catch (FormatException e) {
+                } catch(FormatException e) {
                     Console.WriteLine(e);
                 }
             }
