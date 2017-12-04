@@ -103,7 +103,8 @@ namespace ACC17._01_GameOfLife {
             for(int xs = x - 1; xs <= x + 1; xs++) {
                 for(int ys = y - 1; ys <= y + 1; ys++) {
                     if(xs < 0 || xs >= mWidth ||
-                        ys < 0 || ys >= mHeight)
+                        ys < 0 || ys >= mHeight ||
+                        (xs == x && ys == y))
                         continue;
                     if(array[xs, ys].Alive)
                         count++;
