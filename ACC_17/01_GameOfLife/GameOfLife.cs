@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace ACC17._01_GameOfLife {
@@ -69,19 +68,23 @@ namespace ACC17._01_GameOfLife {
         ///     <code>"width;height;generation;[row][row][row]$"</code> and the dollar ($) at the end marks the End-Of-Line.
         /// </returns>
         public string GetPattern(int generation) {
-            for(int g = Generation; g < generation; g++) {
-                for(int h = 0; h < Height; h++) {
-                    for(int w = 0; w < Width; w++) {
+            Cell[,] copy = new Cell[Width, Height];
+            Array.Copy(Matrix, copy, Matrix.Length);    // Create a writeable copy of matrix
+
+            for (int g = Generation; g < generation; g++) {
+                for (int h = 0; h < Height; h++) {
+                    for (int w = 0; w < Width; w++) {
                         int count = SurroundedBy(Matrix, w, h);
-                        if(count < 3)
-                            Matrix[w, h].Alive = false; // Starvation
-                        else if(count == 3)
-                            Matrix[w, h].Alive = true;  // Kept alive
-                        else if(count > 3)
-                            Matrix[w, h].Alive = false; // Overpopulation
+                        if (count < 2)
+                            copy[w, h].Alive = false; // Starvation
+                        else if (count == 2 || count == 3)
+                            copy[w, h].Alive = true; // Kept alive
+                        else if (count > 3)
+                            copy[w, h].Alive = false; // Overpopulation
                     }
                 }
             }
+            Matrix = copy;  // Write modified copy to matrix
 
             var ret = new StringBuilder();
             ret.Append(Width + ";");
